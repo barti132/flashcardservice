@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class Flashcard{
     private String question;
     private String answer;
+    private Boolean isWriteable;
 }

@@ -23,26 +23,32 @@ public class FlashcardserviceApplication{
     CommandLineRunner runner(FlashcardSetRepository repository){
         return args -> {
             FlashcardSet flashcardSet = FlashcardSet.builder()
+                    .name("set 1")
                     .author("Bartosz Średziński")
                     .topic("IT")
                     .description("Short set about IT")
                     .updatedDate(new Date(System.currentTimeMillis()))
                     .flashcards(new HashSet<>(
-                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine"),
-                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment."))))
+                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine", false),
+                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment.", false))))
                     .build();
 
-            repository.insert(flashcardSet);
+            if(repository.findByName("set 1").isEmpty()){
+                repository.save(flashcardSet);
+            }
             FlashcardSet flashcardSet1 = FlashcardSet.builder()
+                    .name("set 2")
                     .author("Bartosz Średziński")
                     .topic("IT")
                     .description("Another flashcards set about IT")
                     .updatedDate(new Date(System.currentTimeMillis()))
                     .flashcards(new HashSet<>(
-                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine"),
-                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment."))))
+                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine", false),
+                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment.", false))))
                     .build();
-            repository.insert(flashcardSet1);
+            if(repository.findByName("set 2").isEmpty()){
+                repository.save(flashcardSet1);
+            }
         };
     }
 }
