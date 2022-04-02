@@ -7,7 +7,6 @@ import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
 import pl.bartoszsredzinski.flashcardservice.service.FlashcardSetService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,14 +20,14 @@ import java.util.List;
 @RequestMapping("/api/v1/flashcard-sets")
 public class FlashcardSetController{
 
-    private FlashcardSetService flashcardSetService;
+    private final FlashcardSetService flashcardSetService;
 
     public FlashcardSetController(FlashcardSetService flashcardSetService){
         this.flashcardSetService = flashcardSetService;
     }
 
     @GetMapping("")
-    public List<FlashcardSet> getFlashCards(){
+    public List<FlashcardSet> getFlashcards(){
         return flashcardSetService.getAllSets();
     }
 

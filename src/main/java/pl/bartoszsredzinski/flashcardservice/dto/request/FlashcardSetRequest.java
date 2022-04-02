@@ -1,11 +1,11 @@
 package pl.bartoszsredzinski.flashcardservice.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import pl.bartoszsredzinski.flashcardservice.model.Flashcard;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -15,6 +15,7 @@ import java.util.Set;
  * created on 01.04.2022
  */
 @Data
+@AllArgsConstructor
 public class FlashcardSetRequest{
 
     @NotBlank

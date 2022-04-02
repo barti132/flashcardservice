@@ -28,9 +28,15 @@ public class FlashcardserviceApplication{
                     .topic("IT")
                     .description("Short set about IT")
                     .updatedDate(new Date(System.currentTimeMillis()))
-                    .flashcards(new HashSet<>(
-                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine", false),
-                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment.", false))))
+                    .flashcards(new HashSet<>(Arrays.asList(Flashcard.builder()
+                            .question("What is JVM?")
+                            .answer("JVM is an acronym for Java Virtual Machine")
+                            .isWriteable(false)
+                            .build(), Flashcard.builder()
+                            .question("What is JRE?")
+                            .answer("JRE stands for Java Runtime Environment.")
+                            .isWriteable(false)
+                            .build())))
                     .build();
 
             if(repository.findByName("set 1").isEmpty()){
@@ -42,9 +48,15 @@ public class FlashcardserviceApplication{
                     .topic("IT")
                     .description("Another flashcards set about IT")
                     .updatedDate(new Date(System.currentTimeMillis()))
-                    .flashcards(new HashSet<>(
-                            Arrays.asList(new Flashcard("What is JVM?", "JVM is an acronym for Java Virtual Machine", false),
-                                    new Flashcard("What is JRE?", "JRE stands for Java Runtime Environment.", false))))
+                    .flashcards(new HashSet<>(Arrays.asList(Flashcard.builder()
+                            .question("What is JVM?")
+                            .answer("JVM is an acronym for Java Virtual Machine")
+                            .isWriteable(false)
+                            .build(), Flashcard.builder()
+                            .question("What is JRE?")
+                            .answer("JRE stands for Java Runtime Environment.")
+                            .isWriteable(false)
+                            .build())))
                     .build();
             if(repository.findByName("set 2").isEmpty()){
                 repository.save(flashcardSet1);

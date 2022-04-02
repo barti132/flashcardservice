@@ -5,6 +5,7 @@ import pl.bartoszsredzinski.flashcardservice.dto.request.FlashcardSetRequest;
 import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
 import pl.bartoszsredzinski.flashcardservice.repository.FlashcardSetRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class FlashcardSetService{
 
-    private FlashcardSetRepository flashcardSetRepository;
+    private final FlashcardSetRepository flashcardSetRepository;
 
     public FlashcardSetService(FlashcardSetRepository flashcardSetRepository){
         this.flashcardSetRepository = flashcardSetRepository;
@@ -40,6 +41,7 @@ public class FlashcardSetService{
                 .topic(flashcardSetRequest.getTopic())
                 .description(flashcardSetRequest.getDescription())
                 .flashcards(flashcardSetRequest.getFlashcards())
+                .updatedDate(new Date(System.currentTimeMillis()))
                 .build();
     }
 }
