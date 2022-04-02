@@ -1,26 +1,21 @@
 package pl.bartoszsredzinski.flashcardservice.service;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.flashcardservice.dto.request.FlashcardSetRequest;
-import pl.bartoszsredzinski.flashcardservice.model.Flashcard;
+import pl.bartoszsredzinski.flashcardservice.exception.UniqueFieldException;
 import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
 import pl.bartoszsredzinski.flashcardservice.repository.FlashcardSetRepository;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
@@ -47,8 +42,7 @@ class FlashcardSetServiceTest{
 
     @Test
     public void insertNewFlashcardSet_should_add_new_set(){
-        flashcardSetService.insertNewFlashcardSet(
-                new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<Flashcard>()));
+        flashcardSetService.insertNewFlashcardSet(new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>()));
 
         verify(repository, times(1)).insert(any(FlashcardSet.class));
     }
@@ -58,8 +52,8 @@ class FlashcardSetServiceTest{
         when(repository.findByName(any(String.class))).thenReturn(Optional.of(FlashcardSet.builder().build()));
 
 
-        assertThrows(RuntimeException.class, ()-> flashcardSetService.insertNewFlashcardSet(
-                new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<Flashcard>())));
+        assertThrows(UniqueFieldException.class, () -> flashcardSetService.insertNewFlashcardSet(
+                new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>())));
     }
 
 }

@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.flashcardservice.service;
 
 import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.flashcardservice.dto.request.FlashcardSetRequest;
+import pl.bartoszsredzinski.flashcardservice.exception.UniqueFieldException;
 import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
 import pl.bartoszsredzinski.flashcardservice.repository.FlashcardSetRepository;
 
@@ -29,7 +30,7 @@ public class FlashcardSetService{
 
     public void insertNewFlashcardSet(FlashcardSetRequest flashcardSetRequest){
         if(flashcardSetRepository.findByName(flashcardSetRequest.getName()).isPresent()){
-            throw new RuntimeException("Name must be unique");
+            throw new UniqueFieldException("Name must be unique");
         }
         flashcardSetRepository.insert(mapToFlashcardSet(flashcardSetRequest));
     }
