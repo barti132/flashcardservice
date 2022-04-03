@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.bartoszsredzinski.flashcardservice.model.Flashcard;
 import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
+import pl.bartoszsredzinski.flashcardservice.model.User;
 import pl.bartoszsredzinski.flashcardservice.repository.FlashcardSetRepository;
+import pl.bartoszsredzinski.flashcardservice.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +22,7 @@ public class FlashcardserviceApplication{
     }
 
     @Bean
-    CommandLineRunner runner(FlashcardSetRepository repository){
+    CommandLineRunner runner(FlashcardSetRepository flashcardSetRepository, UserRepository userRepository){
         return args -> {
             FlashcardSet flashcardSet = FlashcardSet.builder()
                     .name("set 1")
@@ -39,8 +41,8 @@ public class FlashcardserviceApplication{
                             .build())))
                     .build();
 
-            if(repository.findByName("set 1").isEmpty()){
-                repository.save(flashcardSet);
+            if(flashcardSetRepository.findByName("set 1").isEmpty()){
+                flashcardSetRepository.save(flashcardSet);
             }
             FlashcardSet flashcardSet1 = FlashcardSet.builder()
                     .name("set 2")
@@ -58,8 +60,13 @@ public class FlashcardserviceApplication{
                             .isWriteable(false)
                             .build())))
                     .build();
-            if(repository.findByName("set 2").isEmpty()){
-                repository.save(flashcardSet1);
+            if(flashcardSetRepository.findByName("set 2").isEmpty()){
+                flashcardSetRepository.save(flashcardSet1);
+            }
+
+            User user = User.builder().username("user").password("password").build();
+            if(userRepository.findByUsername("user").isEmpty()){
+                userRepository.insert(user);
             }
         };
     }
