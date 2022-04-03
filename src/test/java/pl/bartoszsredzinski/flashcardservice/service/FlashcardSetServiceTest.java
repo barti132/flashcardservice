@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.flashcardservice.dto.request.FlashcardSetRequest;
+import pl.bartoszsredzinski.flashcardservice.exception.BadIdException;
 import pl.bartoszsredzinski.flashcardservice.exception.UniqueFieldException;
 import pl.bartoszsredzinski.flashcardservice.model.FlashcardSet;
 import pl.bartoszsredzinski.flashcardservice.repository.FlashcardSetRepository;
@@ -51,9 +52,24 @@ class FlashcardSetServiceTest{
     public void insertNewFlashcardSet_should_throw_exception(){
         when(repository.findByName(any(String.class))).thenReturn(Optional.of(FlashcardSet.builder().build()));
 
-
         assertThrows(UniqueFieldException.class, () -> flashcardSetService.insertNewFlashcardSet(
                 new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>())));
+    }
+
+    @Test
+    public void updateSet_should_update_the_set(){
+        when(repository.findById("abc")).thenReturn(Optional.of(new FlashcardSet()));
+
+        flashcardSetService.updateSet(new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>()), "abc");
+        verify(repository, times(1)).save(any(FlashcardSet.class));
+    }
+
+    @Test
+    public void updateSet_should_throw_exception_for_wrong_id(){
+        when(repository.findById("abc")).thenReturn(Optional.empty());
+
+        assertThrows(BadIdException.class, () -> flashcardSetService.updateSet(
+                new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>()), "abc"));
     }
 
 }

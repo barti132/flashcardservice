@@ -9,6 +9,8 @@ import pl.bartoszsredzinski.flashcardservice.dto.request.UserRequest;
 import pl.bartoszsredzinski.flashcardservice.model.User;
 import pl.bartoszsredzinski.flashcardservice.repository.UserRepository;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -19,7 +21,6 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class UserServiceTest{
 
-
     @Mock
     private UserRepository repository;
 
@@ -28,7 +29,10 @@ class UserServiceTest{
 
     @Test
     public void insertNewUser_should_add_new_user_to_db(){
+        when(repository.findByUsername("name")).thenReturn(Optional.empty());
+
         userService.insertNewUser(new UserRequest("name", "pass"));
+
         verify(repository, times(1)).insert(any(User.class));
     }
 }

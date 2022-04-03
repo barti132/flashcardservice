@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.flashcardservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.flashcardservice.dto.request.UserRequest;
 import pl.bartoszsredzinski.flashcardservice.exception.UniqueFieldException;
 import pl.bartoszsredzinski.flashcardservice.model.User;
@@ -18,8 +19,9 @@ import pl.bartoszsredzinski.flashcardservice.repository.UserRepository;
 public class UserService{
     private final UserRepository userRepository;
 
+    @Transactional
     public void insertNewUser(UserRequest userRequest){
-        if(userRepository.findByUsername(userRequest.getUsername()).isEmpty()){
+        if(userRepository.findByUsername(userRequest.getUsername()).isPresent()){
             throw new UniqueFieldException("Username must be unique");
         }
 

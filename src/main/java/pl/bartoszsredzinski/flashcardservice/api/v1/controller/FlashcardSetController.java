@@ -28,11 +28,25 @@ public class FlashcardSetController{
 
     @GetMapping("")
     public List<FlashcardSet> getFlashcards(){
+        log.info("GET flashcard-sets");
         return flashcardSetService.getAllSets();
     }
 
     @PostMapping("")
     public void addFlashcardSet(@Valid @RequestBody FlashcardSetRequest flashcardSetRequest){
+        log.info("POST flashcard-sets");
         flashcardSetService.insertNewFlashcardSet(flashcardSetRequest);
+    }
+
+    @PutMapping("/{id}")
+    public void updateFlashcardSet(@Valid @RequestBody FlashcardSetRequest flashcardSetRequest, @PathVariable String id){
+        log.info("PUT flashcard-sets/" + id);
+        flashcardSetService.updateSet(flashcardSetRequest, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteFlashcardSet(@PathVariable String id){
+        log.info("DELETE flashcard-sets/" + id);
+        flashcardSetService.deleteSet(id);
     }
 }
