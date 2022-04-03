@@ -29,13 +29,19 @@ public class FlashcardSetController{
     @GetMapping("")
     public List<FlashcardSet> getFlashcards(){
         log.info("GET flashcard-sets");
-        return flashcardSetService.getAllSets();
+        return flashcardSetService.findAllSets();
     }
 
     @PostMapping("")
     public void addFlashcardSet(@Valid @RequestBody FlashcardSetRequest flashcardSetRequest){
         log.info("POST flashcard-sets");
         flashcardSetService.insertNewFlashcardSet(flashcardSetRequest);
+    }
+
+    @GetMapping("/{id}")
+    public FlashcardSet getFlashcardSet(@PathVariable String id){
+        log.info("GET flashcard-sets/" + id);
+        return flashcardSetService.findSet(id);
     }
 
     @PutMapping("/{id}")

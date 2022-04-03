@@ -38,7 +38,7 @@ class FlashcardSetServiceTest{
     public void getAllSets_should_return_all_sets(){
         when(repository.findAll()).thenReturn(Arrays.asList(FlashcardSet.builder().build(), FlashcardSet.builder().build()));
 
-        assertEquals(2, flashcardSetService.getAllSets().size());
+        assertEquals(2, flashcardSetService.findAllSets().size());
     }
 
     @Test
@@ -70,6 +70,19 @@ class FlashcardSetServiceTest{
 
         assertThrows(BadIdException.class, () -> flashcardSetService.updateSet(
                 new FlashcardSetRequest("name", "I", "topic", "desc", new HashSet<>()), "abc"));
+    }
+
+    @Test
+    public void findSet_should_return_set(){
+        when(repository.findById("abc")).thenReturn(Optional.ofNullable(FlashcardSet.builder().name("name").build()));
+        assertEquals("name", flashcardSetService.findSet("abc").getName());
+        verify(repository, times(1)).findById("abc");
+    }
+
+    @Test
+    public void findSet_should_throw_exception(){
+        when(repository.findById("abc")).thenReturn(Optional.ofNullable(FlashcardSet.builder().name("name").build()));
+        assertThrows(BadIdException.class, () -> flashcardSetService.findSet( "abc1"));
     }
 
 }

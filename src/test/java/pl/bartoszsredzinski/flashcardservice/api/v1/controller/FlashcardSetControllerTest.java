@@ -71,4 +71,10 @@ class FlashcardSetControllerTest{
         assertTrue(out.getOut().contains("DELETE flashcard-sets/abc"));
     }
 
+    @Test
+    public void getFlashcardSet_should_return_one_set(CapturedOutput out) throws Exception{
+        mockMvc.perform(get("/api/v1/flashcard-sets/abc")).andExpect(status().is2xxSuccessful());
+        assertTrue(out.getOut().contains("GET flashcard-sets/abc"));
+    }
+
 }

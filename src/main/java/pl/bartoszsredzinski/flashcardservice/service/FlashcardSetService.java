@@ -26,7 +26,7 @@ public class FlashcardSetService{
         this.flashcardSetRepository = flashcardSetRepository;
     }
 
-    public List<FlashcardSet> getAllSets(){
+    public List<FlashcardSet> findAllSets(){
         return flashcardSetRepository.findAll();
     }
 
@@ -63,5 +63,9 @@ public class FlashcardSetService{
     @Transactional
     public void deleteSet(String id){
         flashcardSetRepository.deleteById(id);
+    }
+
+    public FlashcardSet findSet(String id){
+        return flashcardSetRepository.findById(id).orElseThrow(() -> new BadIdException("Set " + id + " not found"));
     }
 }

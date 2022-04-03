@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Set;
+
 /**
  * User model
  *
@@ -23,4 +25,6 @@ public class User{
     private String username;
     private String password;
     private String role;
+
+    private Set<FlashcardSet> sets;
 }

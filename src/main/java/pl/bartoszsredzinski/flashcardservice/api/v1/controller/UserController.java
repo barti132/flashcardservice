@@ -2,10 +2,8 @@ package pl.bartoszsredzinski.flashcardservice.api.v1.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.bartoszsredzinski.flashcardservice.dto.request.AddSetToUserRequest;
 import pl.bartoszsredzinski.flashcardservice.dto.request.UserRequest;
 import pl.bartoszsredzinski.flashcardservice.service.UserService;
 
@@ -25,10 +23,16 @@ public class UserController{
 
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("")
     public void registerUser(@Valid @RequestBody UserRequest userRequest){
         log.info("POST users");
         userService.insertNewUser(userRequest);
+    }
+
+    @PutMapping("/{id}/flashcards-sets")
+    public void addSetToUser(@Valid @RequestBody AddSetToUserRequest addSetToUserRequest, @PathVariable String id){
+        log.info("PUT users/" + id  + "/flashcards-sets");
+        userService.addSetToUser(addSetToUserRequest, id);
     }
 
 }
